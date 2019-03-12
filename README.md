@@ -4,7 +4,8 @@ GOAL: A program which takes a .txt file as it’s input, searches for all “int
 (1)	Take .txt input:
   There are multiple .txt files for each recording session. The program can do one at a time, I’d don’t mind having them in separate excel sheets.
   The .txt files are transcriptions of the recordings in the following format:
-  M001   how was the little school today ? . 
+  
+  M001   how was the little school today ? .
          00:05:34.203 – 00:05:42.211
 
   G001   we went to the /park for gym time/
@@ -12,6 +13,7 @@ GOAL: A program which takes a .txt file as it’s input, searches for all “int
 
   B001   /it was okay/ {unclear} . [chews food]
          00:05:44.829 – 00:05:54.395
+         
   All transcriptions will be in lower case, with no capitals except for proper nouns and “I”. Other symbols which are frequency used in transcriptions include /, [], {}, ., ?.
 
 
