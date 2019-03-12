@@ -1,0 +1,8 @@
+M001   how was the little school today ? . [chews food with tremondous force]
+       00:05:34.203 – 00:05:42.211
+
+G001   we went to the /park for gym time/
+       00:05:42.307 – 00:05:48.001
+	   
+B001   /it was okay/ {unclear} . [chews food with tremondous force]
+       00:05:44.829 – 00:05:54.395
