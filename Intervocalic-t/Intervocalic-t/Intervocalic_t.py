@@ -1,31 +1,45 @@
 #Gabe Johnson
 #Solution to finding intervoclaic /t/ within a txt file and printing it to a csv file
-import re
+import re #used for regex
+
+#FUCNTION DEFINITIONS
+def fileNameCheck():
+    cont = False
+    while cont is False: #while loop used to get a file from the user that successfully opens
+    
+        file_name = input("Please enter the name of the file you would like to search: ") #asks user to input file name
+
+        file_open = None
+
+        try:
+            file_open = open(file_name, "r") #try to open file
+        except IOError:
+            print("Could not open file. Please check file path, or use an absolute path.") #if it fails it outputs error
+            print("")
+        else:
+            cont = True #if it doesn't fail it breaks out of while loop
+            file_open.close()
+
+    #this is purely here for visual studios so it looks nicer, don't ask. You can delete this if you want
+    return file_name
 
 print("Welcome the intervocalic /t/ search.")
 print("")
 
-cont = False
-while cont is False: #while loop used to get a file from the user that successfully opens
-    
-    t_file_name = input("Please enter the name of the file you would like to search: ") #asks user to input file name
+t_file_name = fileNameCheck() #gets file input name
 
-    t_open = None
+t_open = open(t_file_name, "r") #open input file
 
-    try:
-        t_open = open(t_file_name, "r") #try to open file
-    except IOError:
-        print("Could not open file. Please check file path, or use an absolute path.") #if it fails it outputs error
-        print("")
-    else:
-        cont = True #if it doesn't fail it breaks out of while loop
+t_outfile_name = input("Please enter the name of the file you would to output to: ") #input
 
-    #this is purely here for visual studios so it looks nicer, don't ask. You can delete this if you want
-    cont = cont 
+t_out_open = open(t_outfile_name, "w+") #open output file
 
 t_word = [] #declare an empty list to hold t word
 t_speaker = [] #to hold speaker of t word
 t_time = [] #to hold time spoken of t word
+t_word_final = [] #declare an empty list to hold final t words
+t_speaker_final = [] #to hold final speakers of t word
+t_time_final = [] #to hold final times spoken of t word
 
 temp = None #temp value
 t_exist = False #value to test if there is a t or not in a word
@@ -89,21 +103,40 @@ for t_line in t_lines:
 for i in range(0,len(t_word)):
     t_word[i] = re.sub('[/,.!?;:()<>]+', '', t_word[i]) #uses regex to clean words
     
-    #Test for VtV
 
-    #Test for VttV
+for i in range(0,len(t_word)):
+    is_intervocalic = False #bool to tell if word is intervocalic
 
-    #Test for Vtle & Vttle
+    t_test = re.sub('[aeiouy]+', 'V', t_word[i])
 
-    #Test for ightV
+    if 'VtV' in t_test: #Test for VtV
+        is_intervocalic = True
 
-    #Test for Vt'
+    if 'VttV' in t_test: #Test for VttV
+        is_intervocalic = True
 
-    #Test for ight'
+    if 'VtlV' in t_test or 'VttlV' in t_test: #Test for Vtle & Vttle
+        is_intervocalic = True
 
+    if 'VghtV' in t_test: #Test for ightV
+        is_intervocalic = True
 
+    if 'Vt\'' in t_test: #Test for Vt'
+        is_intervocalic = True
 
+    if 'ight\'' in t_test: #Test for ight'
+        is_intervocalic = True
+    
+    if is_intervocalic == True:
+        t_word_final.append(t_word[i])
+        t_speaker_final.append(t_speaker[i])
+        t_time_final.append(t_time[i])
 
+for t in range(0, len(t_word_final)): #outputs file to file
+    print("%s, %s, %s\n" % (t_word_final[t], t_speaker_final[t], t_time_final[t]))
 
-for t in range(0, len(t_word)):
-    print("%10s %10s %10s" % (t_word[t], t_speaker[t], t_time[t]))
+for t in range(0, len(t_word_final)): #outputs file to file
+    t_out_open.write("%s, %s, %s\n" % (t_word_final[t], t_speaker_final[t], t_time_final[t]))
+
+t_open.close() #closes input file
+t_out_open.close() #closes output file
