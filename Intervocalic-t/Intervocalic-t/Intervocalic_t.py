@@ -151,8 +151,8 @@ while repeat == True:
 			t_time_final.append(t_time[i])
 			t_detected.append(current_t_detected)
 
-	for t in range(0, len(t_word_final)): #outputs date to console
-		print("%s, %s, %s, %s\n" % (t_word_final[t], t_detected[t], t_speaker_final[t], t_time_final[t]))
+	#for t in range(0, len(t_word_final)): #outputs date to console
+	#	print("%s, %s, %s, %s\n" % (t_word_final[t], t_detected[t], t_speaker_final[t], t_time_final[t]))
 
 	t_out_open.write("Word, Detected, Speaker, Time\n")
 	for t in range(0, len(t_word_final)): #outputs data to file
@@ -175,7 +175,5 @@ while repeat == True:
 			print("Please enter y or n.\n")
 			cont = False
 	
-
-
 	t_open.close() #closes input file
 	t_out_open.close() #closes output file
