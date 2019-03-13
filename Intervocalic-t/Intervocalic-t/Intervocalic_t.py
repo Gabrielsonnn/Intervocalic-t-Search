@@ -57,6 +57,10 @@ for t_line in t_lines:
 		line_words = list(t_line.split()) #splits line into seperate words
 
 		current_speaker = line_words[0] #gets current speaker from file
+		
+		if current_speaker == 'F001' or current_speaker == 'D001' or current_speaker == 'Notes' or  current_speaker == 'notes': #checks for father ID or notes
+			step_flag = 2 #sets flag to next step
+			continue #continues to next line
 
 		is_skip_par = False #sets is_skip_par to false at the start of every new line
 

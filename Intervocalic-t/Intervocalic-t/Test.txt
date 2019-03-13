@@ -3,6 +3,12 @@ M001   how was the little school today ? . [chews food with tremondous force]
 
 G001   we went to the /park for gym time/ bitten, mitten, written,
        00:05:42.307 – 00:05:48.001
-	   
-B001   /it was okay/ {uncltea r} tyle . [chews food with tremondous force]
+
+Notes we went to the /park okay/ {uncltea r} tremondous lite
+	    00:05:48.001 -  00:05:48.001
+
+B001   /it was okay/ {uncltea r} tyle . [chews food with tremondous force] lite
        00:05:44.829 – 00:05:54.395
+
+F001 we went to the /park okay/ {uncltea r} tremondous lite
+	    00:05:48.001 -  00:05:48.001
