@@ -4,24 +4,24 @@ import re #used for regex
 
 #FUCNTION DEFINITIONS
 def fileNameCheck():
-    cont = False
-    while cont is False: #while loop used to get a file from the user that successfully opens
-    
-        file_name = input("Please enter the name of the file you would like to search: ") #asks user to input file name
+	cont = False
+	while cont is False: #while loop used to get a file from the user that successfully opens
+	
+		file_name = input("Please enter the name of the file you would like to search: ") #asks user to input file name
 
-        file_open = None
+		file_open = None
 
-        try:
-            file_open = open(file_name, "r") #try to open file
-        except IOError:
-            print("Could not open file. Please check file path, or use an absolute path.") #if it fails it outputs error
-            print("")
-        else:
-            cont = True #if it doesn't fail it breaks out of while loop
-            file_open.close()
+		try:
+			file_open = open(file_name, "r") #try to open file
+		except IOError:
+			print("Could not open file. Please check file path, or use an absolute path.") #if it fails it outputs error
+			print("")
+		else:
+			cont = True #if it doesn't fail it breaks out of while loop
+			file_open.close()
 
-    #this is purely here for visual studios so it looks nicer, don't ask. You can delete this if you want
-    return file_name
+	#this is purely here for visual studios so it looks nicer, don't ask. You can delete this if you want
+	return file_name
 
 print("Welcome the intervocalic /t/ search.")
 print("")
@@ -107,8 +107,8 @@ for t_line in t_lines:
 		step_flag = 1 #sets flag to next step
 
 for i in range(0,len(t_word)):
-    t_word[i] = re.sub('[/,.!?;:()<>]+', '', t_word[i]) #uses regex to clean words
-    
+	t_word[i] = re.sub('[/,.!?;:()<>]+', '', t_word[i]) #uses regex to clean words
+	
 
 for i in range(0,len(t_word)):
 	is_intervocalic = False #bool to tell if word is intervocalic
@@ -130,7 +130,7 @@ for i in range(0,len(t_word)):
 	if 'VghtV' in t_test: #Test for ightV
 		is_intervocalic = True
 		current_t_detected = 'VghtV'
-
+		
 	if 'Vt\'' in t_test: #Test for Vt'
 		is_intervocalic = True
 		current_t_detected = 'Vt\''
@@ -146,11 +146,11 @@ for i in range(0,len(t_word)):
 		t_detected.append(current_t_detected)
 
 for t in range(0, len(t_word_final)): #outputs file to file
-    print("%s, %s, %s, %s\n" % (t_word_final[t], t_detected[t], t_speaker_final[t], t_time_final[t]))
+	print("%s, %s, %s, %s\n" % (t_word_final[t], t_detected[t], t_speaker_final[t], t_time_final[t]))
 
 t_out_open.write("Word, Detected, Speaker, Time\n")
 for t in range(0, len(t_word_final)): #outputs file to file
-    t_out_open.write("%s, %s, %s, %s\n" % (t_word_final[t], t_detected[t], t_speaker_final[t], t_time_final[t]))
+	t_out_open.write("%s, %s, %s, %s\n" % (t_word_final[t], t_detected[t], t_speaker_final[t], t_time_final[t]))
 
 t_open.close() #closes input file
 t_out_open.close() #closes output file
