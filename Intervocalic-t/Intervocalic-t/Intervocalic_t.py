@@ -1,11 +1,6 @@
 #Gabe Johnson
 #Solution to finding intervoclaic /t/ within a txt file and printing it to a csv file
-
-#TODO:
-#be able to deal with [] and {}
-##remove extra characters from words
-#find /t/ in words
-#print a csv
+import re
 
 print("Welcome the intervocalic /t/ search.")
 print("")
@@ -89,7 +84,26 @@ for t_line in t_lines:
 		step_flag = 3 #sets flag to next step
 
 	elif step_flag == 3:
-		step_flag = 1
+		step_flag = 1 #sets flag to next step
+
+for i in range(0,len(t_word)):
+    t_word[i] = re.sub('[/,.!?;:()<>]+', '', t_word[i]) #uses regex to clean words
+    
+    #Test for VtV
+
+    #Test for VttV
+
+    #Test for Vtle & Vttle
+
+    #Test for ightV
+
+    #Test for Vt'
+
+    #Test for ight'
+
+
+
+
 
 for t in range(0, len(t_word)):
     print("%10s %10s %10s" % (t_word[t], t_speaker[t], t_time[t]))
