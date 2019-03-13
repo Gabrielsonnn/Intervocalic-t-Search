@@ -40,11 +40,13 @@ t_time = [] #to hold time spoken of t word
 t_word_final = [] #declare an empty list to hold final t words
 t_speaker_final = [] #to hold final speakers of t word
 t_time_final = [] #to hold final times spoken of t word
+t_detected = [] #to hold what type of intervocalic t was detected by program
 
 temp = None #temp value
 t_exist = False #value to test if there is a t or not in a word
 is_skip_par = False #to see if we skip rest of par
 current_speaker = None #value to hold current speaker
+current_t_detected = None #holds temp value of current t detected
 l_pos = 0 #value to hold current list posistion, starts at zero
 l_count = 0 #counts how many positions were skipped, so it can add in the time
 
@@ -109,38 +111,46 @@ for i in range(0,len(t_word)):
     
 
 for i in range(0,len(t_word)):
-    is_intervocalic = False #bool to tell if word is intervocalic
+	is_intervocalic = False #bool to tell if word is intervocalic
 
-    t_test = re.sub('[aeiouy]+', 'V', t_word[i])
+	t_test = re.sub('[aeiouy]+', 'V', t_word[i])
+	
+	if 'VtV' in t_test: #Test for VtV
+		is_intervocalic = True
+		current_t_detected = 'VtV'
 
-    if 'VtV' in t_test: #Test for VtV
-        is_intervocalic = True
+	if 'VttV' in t_test: #Test for VttV
+		is_intervocalic = True
+		current_t_detected = 'VttV'
 
-    if 'VttV' in t_test: #Test for VttV
-        is_intervocalic = True
+	if 'VtlV' in t_test or 'VttlV' in t_test: #Test for Vtle & Vttle
+		is_intervocalic = True
+		current_t_detected = 'VttlV or VtlV'
 
-    if 'VtlV' in t_test or 'VttlV' in t_test: #Test for Vtle & Vttle
-        is_intervocalic = True
+	if 'VghtV' in t_test: #Test for ightV
+		is_intervocalic = True
+		current_t_detected = 'VghtV'
 
-    if 'VghtV' in t_test: #Test for ightV
-        is_intervocalic = True
+	if 'Vt\'' in t_test: #Test for Vt'
+		is_intervocalic = True
+		current_t_detected = 'Vt\''
 
-    if 'Vt\'' in t_test: #Test for Vt'
-        is_intervocalic = True
-
-    if 'ight\'' in t_test: #Test for ight'
-        is_intervocalic = True
-    
-    if is_intervocalic == True:
-        t_word_final.append(t_word[i])
-        t_speaker_final.append(t_speaker[i])
-        t_time_final.append(t_time[i])
+	if 'ight\'' in t_test: #Test for ight'
+		is_intervocalic = True
+		current_t_detected = 'ight\''
+	
+	if is_intervocalic == True:
+		t_word_final.append(t_word[i])
+		t_speaker_final.append(t_speaker[i])
+		t_time_final.append(t_time[i])
+		t_detected.append(current_t_detected)
 
 for t in range(0, len(t_word_final)): #outputs file to file
-    print("%s, %s, %s\n" % (t_word_final[t], t_speaker_final[t], t_time_final[t]))
+    print("%s, %s, %s, %s\n" % (t_word_final[t], t_detected[t], t_speaker_final[t], t_time_final[t]))
 
+t_out_open.write("Word, Detected, Speaker, Time\n")
 for t in range(0, len(t_word_final)): #outputs file to file
-    t_out_open.write("%s, %s, %s\n" % (t_word_final[t], t_speaker_final[t], t_time_final[t]))
+    t_out_open.write("%s, %s, %s, %s\n" % (t_word_final[t], t_detected[t], t_speaker_final[t], t_time_final[t]))
 
 t_open.close() #closes input file
 t_out_open.close() #closes output file
