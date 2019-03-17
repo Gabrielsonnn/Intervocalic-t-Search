@@ -2,6 +2,7 @@
 #Solution to finding intervoclaic /t/ within a txt file and printing it to a csv file
 
 import re #used for regex
+from builtins import input #may fix raw_input issue
 
 #FUCNTION DEFINITIONS
 
@@ -26,13 +27,18 @@ def fileNameCheck():
 	#this is purely here for visual studios so it looks nicer, don't ask. You can delete this if you want
 	return file_name
 
+def hasNumbers(str):
+	return any(char.isdigit() for char in str)
+
 print("Welcome the intervocalic /t/ search.") #prints intro clause
 print("")
 
 repeat = True
 
 while repeat == True:
-	t_file_name = fileNameCheck() #gets file input name and verifies that it opens
+	#t_file_name = fileNameCheck() #gets file input name and verifies that it opens
+
+	t_file_name = fileNameCheck()
 
 	t_open = open(t_file_name, "r") #open input file to read
 
@@ -67,6 +73,7 @@ while repeat == True:
 			current_speaker = line_words[0] #gets current speaker from file
 		
 			if current_speaker == 'F001' or current_speaker == 'D001' or current_speaker == 'Notes' or  current_speaker == 'notes': #checks for father ID or notes
+				current_speaker = 'skip' #to encapsulate every value of skipable speakers
 				step_flag = 2 #sets flag to next step
 				continue #continues to next line
 
@@ -99,17 +106,46 @@ while repeat == True:
 
 			step_flag = 2 #sets flag to next step
 
-		elif step_flag == 2: #second line of entry (time)
+		elif step_flag == 2: #second line of entry (time or more words)
 			line_words = list(t_line.split()) #splits line into seperate words
 
-			for i in range(0,l_count): #sets t_time to the start time of the entry, does that for however many t words were added
-				t_time.append(line_words[0])
+			if hasNumbers(line_words[0]) == False and current_speaker == 'skip':
+				continue #skips to next line
 
-			l_count = 0 #sets count back to zero
+			elif hasNumbers(line_words[0]) == False: #if not time then its another line of words
+				for word in line_words[0:]: #iterates through next line
+					if is_skip_par == True: #if it it a starting par loop through words until end par is found
+						for ch in word:
+							if ch == '}' or ch == ']': #if finds end par sets skip par to false and breaks out of for loop
+								is_skip_par = False
+								break	
 
-			step_flag = 3 #sets flag to next step
+					else:
+						t_exist = False
 
-		elif step_flag == 3: #third line of entry (nothing)
+						for ch in word: #iterates through each char in word
+							if ch == 't' or ch == 'T': #checks if char is 't', if it is sets t_exist to true
+								t_exist = True
+							elif ch == '{' or ch == '[': #if starting par is detected, sets bool to skip rest of words until end par is found
+								is_skip_par = True
+							elif ch == '}' or ch == ']': #when end par is found stops skipping words`
+								t_exist = False
+								is_skip_par = False
+
+						if t_exist == True and is_skip_par == False: #test to see if t is in the word and its not currently skipping words because of par
+							t_word.append(word) #sets t_word to current word
+							t_speaker.append(current_speaker) #sets t_speaker to current speaker
+							l_pos += 1 #increments pos
+							l_count += 1 #increments count
+			else:
+				for i in range(0,l_count): #sets t_time to the start time of the entry, does that for however many t words were added
+					t_time.append(line_words[0])
+
+				l_count = 0 #sets count back to zero
+
+				step_flag = 3 #sets flag to next step
+
+		elif step_flag == 3: #third line of entry (moves to next entry)
 			step_flag = 1 #sets flag to next step
 
 	for i in range(0,len(t_word)): #loops through t_words to clean them
