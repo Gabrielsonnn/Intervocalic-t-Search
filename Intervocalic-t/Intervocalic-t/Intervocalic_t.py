@@ -197,9 +197,12 @@ while repeat == True:
 
 	print("Data successfully outputted to file.\n")
 
+	t_open.close() #closes input file
+	t_out_open.close() #closes output file
+
 	cont = False
 	while cont == False:
-		repeat = input("Do you want to run another file (y/n):")
+		repeat = raw_input("Do you want to run another file (y/n):")
 
 		if repeat == 'y' or repeat == 'Y':
 			repeat = True;
@@ -210,6 +213,3 @@ while repeat == True:
 		else:
 			print("Please enter y or n.\n")
 			cont = False
-	
-	t_open.close() #closes input file
-	t_out_open.close() #closes output file
