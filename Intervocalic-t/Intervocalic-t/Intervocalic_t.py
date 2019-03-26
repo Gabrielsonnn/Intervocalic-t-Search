@@ -2,7 +2,7 @@
 #Solution to finding intervoclaic /t/ within a txt file and printing it to a csv file
 
 import re #used for regex
-from builtins import input #may fix raw_input issue
+#from builtins import input #may fix raw_input issue
 
 #FUCNTION DEFINITIONS
 
@@ -11,7 +11,7 @@ def fileNameCheck():
 	cont = False
 	while cont is False: #while loop used to get a file from the user that successfully opens
 	
-		file_name = input("Please enter the name of the file you would like to search: ") #asks user to input file name
+		file_name = raw_input("Please enter the name of the file you would like to search: ") #asks user to input file name
 
 		file_open = None
 
@@ -42,7 +42,7 @@ while repeat == True:
 
 	t_open = open(t_file_name, "r") #open input file to read
 
-	t_outfile_name = input("Please enter the name of the file you would to output to: ") #get output file
+	t_outfile_name = raw_input("Please enter the name of the file you would to output to: ") #get output file
 
 	t_out_open = open(t_outfile_name, "w+") #open output file to write
 
